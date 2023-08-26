@@ -1,25 +1,39 @@
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
+import router from "@/router";
 export const useAuthStore = defineStore("auth", {
    state: () => ({
       authUser: useLocalStorage("authUser", null),
-      username: "",
-      password: "",
+      token: useLocalStorage("token", null),
+      email: useLocalStorage("email", null),
    }),
    getters: {
-      user: (state) => state.authUser   
+      getUserName(state){
+         return (state.authUser != null ? state.authUser.user : "not" )
+      },
    },
    actions: {
-      async getUser() {
-         const res = await fetch('api/login-api',{
+      async getUser(username, password) {
+         const res = await fetch('http://localhost:8000/login-api',{
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
             },
-            body: JSON.stringify({"username": this.username, "password": this.password}),
+            body: JSON.stringify({"username": username, "password": password}),
          })
-         this.authUser = await res.json()
-      
+         const data = await res.json()
+     
+         this.authUser = data.user.username
+         this.email = data.user.email
+         this.token = data.token
+
+         router.push('/clientes')
+      },
+      logOut(){
+         this.authUser = null
+         this.token = null
+         this.email = null
+         router.push('/')
       }
    }
 })
