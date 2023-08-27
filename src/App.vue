@@ -10,8 +10,6 @@
 
 <script setup>
    import NavBar from './components/NavBar'
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
 
 </script>
 
