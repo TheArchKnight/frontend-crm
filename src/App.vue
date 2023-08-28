@@ -10,6 +10,7 @@
 <script setup>
    import NavBar from './components/NavBar'
 
+
 </script>
 
 <style>
