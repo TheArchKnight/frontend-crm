@@ -8,9 +8,8 @@
 
             <div class="navbar-nav">
                <img :src="logo" class="logo">
-               <a class="nav-link " href="" v-if="loginStore.authUser">Clientes</a>  
+               <router-link class="nav-link" to="/clientes" v-if="loginStore.authUser">Clientes</router-link>  
             </div>
-
             <div class="navbar-nav ms-auto">
                <form class="d-flex" role="search" method="post" action="{{lista_url}}" v-if="loginStore.authUser">
                   <input class="form-control me-2" type="search" aria-label="Search" name="searched">
@@ -20,8 +19,8 @@
                      <option value="administrador">Administrador</option>
                   </select>
                </form>
-               <span class="navbar-text mx-3" v-if="loginStore.authUser">Perfil: </span> 
-               <a class ="mx-3  nav-link" href="" v-if="loginStore.authUser">Cerrar sesion</a>
+               <span class="navbar-text mx-3" v-if="loginStore.authUser">Perfil: {{loginStore.authUser}} </span> 
+               <a class ="mx-3  nav-link" href="" @click="loginStore.logOut" v-if="loginStore.authUser">Cerrar sesion</a>
             </div>
          </div>
       </div>
@@ -30,8 +29,6 @@
 
 <script setup>
 import { useAuthStore } from '@/stores/auth';
-
-
 const logo = require('@/images/logo-doctor-clean.png')
 const loginStore = useAuthStore()
 </script>
