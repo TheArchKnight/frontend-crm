@@ -30,7 +30,9 @@
                </thead>
                <tbody>             
                   <tr v-for="customer in customers" :key="customer.id" class="text-center">
-                     <td><a href="">{{customer.nombre_organizacion}}</a></td>
+                     <td>
+                        <router-link :to="{name: 'customerDetail', params:{id:customer.id}}">{{customer.nombre_organizacion}}</router-link>
+                     </td>
                      <td>{{customer.direccion}}</td>
                      <td>{{customer.administrador}}</td>
                      <td>{{customer.telefono}}</td>
