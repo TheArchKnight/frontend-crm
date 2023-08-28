@@ -3,18 +3,22 @@ import ClientList from './views/ClientList'
 import ClientDetail from './views/ClientDetail'
 import CustomerCrate from './views/CustomerCreate'
 import LogIn from './views/LogIn'
+import SignUp from './views/SignUp'
 //componentes o views
 //
 //definir objetos de rutas
 
 const routes = [
    {
-      path:'/clientes', component: ClientList,
-      name: 'customerList'
+      path:'/clientes',
+      name: 'customerList',
+      component: ClientList,
    },
    {
-      path:'/clientes/detail', component:ClientDetail, 
+      path:'/clientes/detail', 
       name: 'customerDetail',
+      component:ClientDetail, 
+
    },
    {
       path: '/clientes/crear',
@@ -22,7 +26,13 @@ const routes = [
       component: CustomerCrate,
    },
    {
-      path: '/', 
+      path: '/signup/',
+      name: 'signUp',
+      component: SignUp
+   },
+   {
+      path: '/',
+      name: 'login',
       component:LogIn,
    }
 ]
