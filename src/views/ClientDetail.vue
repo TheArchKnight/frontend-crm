@@ -4,7 +4,7 @@
       <div class="col-md-3 info-parent"> 
          <div class="row text-center info-cliente" >
             <h1>
-               cliente
+               {{customer.nombre_organizacion}}
             </h1>
             <h3>cliente.direccion</h3>
             <h5>Estado del cliente: cliente.estado</h5>
@@ -46,22 +46,59 @@
                   <th class="text-center">Obersvaciones</th>
                   <th class="text-center">Tipo</th>
                   <th class="text-center">Acciones</th>
-
                </thead>
             </table>
-
-
          </div>
       </div>
    </div>
 
-
-
-
-
 </template>
 
 <script setup>
+   import { useRoute } from 'vue-router';
+   import { useAuthStore } from '@/stores/auth';
+   import axios from 'axios';
+   import { ref } from 'vue';
+   const id = useRoute().params.id;
+   const loginStore = useAuthStore();
+
+
+   let customer = ref([])
+   let visitas = ref([])
+   let llamadas = ref([])
+
+   axios.get(`http://localhost:8000/clientes-api/${id}`,{
+      headers: {
+      'Authorization': `Token ${loginStore.token}`
+      },
+   }).then(response => {
+      customer.value = response.data
+   })
+
+   axios.get(`http://localhost:8000/visitas/`,{
+      headers: {
+      'Authorization': `Token ${loginStore.token}`
+      },
+      params: {
+         customer_id: id
+      }
+
+   }).then(response => {
+      visitas.value = response.data
+   })
+
+   axios.get(`http://localhost:8000/llamadas/`,{
+      headers: {
+      'Authorization': `Token ${loginStore.token}`
+      },
+      params: {
+         customer_id: id
+      }
+
+   }).then(response => {
+      llamadas.value = response.data
+   })
+
 
 </script>
 
