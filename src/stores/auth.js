@@ -1,17 +1,19 @@
+/*
+   * This store is used for login and logout of the user.
+   * Token, username and email are stored in local, for refreshing proof
+   * features and later use of them.
+*/
+
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
 import router from "@/router";
+
 export const useAuthStore = defineStore("auth", {
    state: () => ({
       authUser: useLocalStorage("authUser", null),
       token: useLocalStorage("token", null),
       email: useLocalStorage("email", null),
    }),
-   getters: {
-      getUserName(state){
-         return (state.authUser != null ? state.authUser.user : "not" )
-      },
-   },
    actions: {
       async getUser(username, password) {
          const res = await fetch('http://localhost:8000/login-api',{
@@ -27,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
          this.email = data.user.email
          this.token = data.token
 
-         router.push('/clientes')
+         router.push({name: 'customerList'})
       },
       logOut(){
          this.authUser = null

@@ -12,7 +12,8 @@
 </template>
 
 <script setup>
-   import {useAuthStore} from '../stores/auth'
+   import router from '@/router';
+import {useAuthStore} from '../stores/auth'
    const logo = require('@/images/logo-doctor-clean.png')
    let username, password
    const loginStore = useAuthStore()
@@ -20,6 +21,10 @@
    function handleSubmit(event){
       event.preventDefault();
       loginStore.getUser(username, password);
+   }
+
+   if(loginStore.authUser !== null){
+      router.push({name: 'customerList'})
    }
 </script>
 

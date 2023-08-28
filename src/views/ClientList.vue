@@ -1,6 +1,7 @@
 <template>
    <div class="row">
       <div class="col-md-12">
+
          <div class="table-responsive">
             <table class="table table-hover sticky table-striped align-middle" id="clientes-table">
                <thead>               
@@ -28,31 +29,32 @@
                   <th class="text-center">NIT</th>
                </thead>
                <tbody>             
-                  <tr class="text-center">
+                  <tr v-for="customer in customers" :key="customer.id" class="text-center">
+                     <td><a href="">{{customer.nombre_organizacion}}</a></td>
+                     <td>{{customer.direccion}}</td>
+                     <td>{{customer.administrador}}</td>
+                     <td>{{customer.telefono}}</td>
+                     <td>{{customer.correo}}</td>
+                     <td>{{customer.frecuencia_meses}}</td>
+                     <td>{{customer.fecha_vencimiento}}</td>
+
                      <!--
-                     <td><a href="{% url 'clientes:detalles-cliente' cliente.pk %}">{{cliente.nombre_orgnanizacion}}</a></td>
-                     <td>{{cliente.direccion}}</td>
-                     <td>{{cliente.administrador}}</td>
-                     <td>{{cliente.telefono}}</td>
-                     <td>{{cliente.correo}}</td>
-                     <td>{{cliente.frecuencia_meses}}</td>
-                     {% if cliente.fecha_vencimiento == None %}
-                     <td>----</td>
-                     {% else %}
-                     <td>{{cliente.fecha_vencimiento}}</td>
-                     {% endif %}
-                     <td>{{cliente.estado}}</td>
-                     <td>{{cliente.nit}} </td>
+                        {% if customer.fecha_vencimiento == None %}
+                        {% else %}
+                        <td>{{customer.fecha_vencimiento}}</td>
+                        {% endif %}
                      -->
+                     <td>{{customer.estado}}</td>
+                     <td>{{customer.nit}} </td>
                   </tr>
+
                </tbody>
 
             </table>
             <hr/>
-            <div class="text-center">
-               <a href="{% url 'clientes:crear-cliente' %}" class="btn btn-success align-self-lg-center" role="button">Crear un nuevo cliente</a>
-            </div> 
-
+            <div class="text-center" >               
+               <router-link  class="btn btn-success" :to="{name: 'customerCreate'}">Crear nuevo cliente</router-link> 
+            </div>
          </div>
       </div>
    </div>
@@ -61,14 +63,27 @@
 
 </template>
 <script setup>
-
-
-
-
+   import { useAuthStore } from '@/stores/auth';
+   import { ref } from 'vue';
+   const loginStore = useAuthStore()
+   let customers = ref([]);
+   fetch('http://localhost:8000/clientes-api/', {
+     method: 'GET',
+     headers: {
+       'Content-Type': 'application/json',
+       'Authorization': `Token ${loginStore.token}`,
+     },
+   }).then(response => {
+     return response.json(); // This returns a Promise
+   }).then(data => {
+     customers.value = data; // Assign the fetched data to the customers array
+   }).catch(error => {
+     console.error('Fetch error:', error);
+   });
 </script>
 
 
-<style>
+<style scoped>
 .table.sticky{
    border-collapse: collapse;
    text-align: center;
