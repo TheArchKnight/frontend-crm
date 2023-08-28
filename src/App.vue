@@ -1,18 +1,18 @@
 <template>
-   <NavBar/>
+   <div id="app">
+      <NavBar/>
+      <div class="main">
+         <router-view></router-view>
 
-   <div class="container-fluid " style="padding: 30px;">      
-
-      <TableDB/>
-
+      </div>
    </div>
 </template>
 
 <script setup>
-   import NavBar from './components/NavBar';
-import TableDB from './components/TableDB';
+   import NavBar from './components/NavBar'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.js';
+
 </script>
 
 <style>
@@ -21,6 +21,8 @@ import 'bootstrap/dist/js/bootstrap.js';
    box-sizing: border-box;
 }
 
-
+.main{
+   padding: 30px;
+}
 
 </style>

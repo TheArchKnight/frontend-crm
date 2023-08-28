@@ -1,5 +1,4 @@
 <template>
-
    <div class="row">
       <div class="col-md-12">
          <div class="table-responsive">
@@ -85,15 +84,6 @@
    width: 450px;
    border-bottom: 1px solid #000;
 }
-
-.column{
-   border-left: 1px solid #000;
-}
-
-.column.rigth{
-   border-right: 1px solid #000;
-}
-
 
 .table.sticky th{
    width: 450px;
