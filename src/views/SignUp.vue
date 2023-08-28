@@ -4,14 +4,16 @@
          <label for="username">Nombre de usuario:</label>
          <input type="text" class="form-control" id="username" v-model="user.username" required>
 
-         <label for="customers">Clientes:  ' </label>
-         <input type="checkbox" class="form-check-label" id="customers" v-model="user.customers" required>
+         <div class="form-check my-2">
+            <label for="customers">Clientes:  '</label>
+            <input type="checkbox" class="form-check-label" id="customers" v-model="user.customers" required>
+         </div>
 
          <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email" class="my-2">Email:</label>
             <input type="text" class="form-control" id="email" v-model="user.email" required>
 
-            <label for="password">Contraseña:</label>
+            <label for="password" class="my-2">Contraseña:</label>
             <input type="text" class="form-control" id="password" v-model="user.password" required>
 
             <ul>
@@ -30,7 +32,8 @@
 </template>
 
 <script setup>
-   import { useAuthStore } from '@/stores/auth';
+import router from '@/router';
+import { useAuthStore } from '@/stores/auth';
    const loginStore = useAuthStore()
    let user = {
       email: "",
@@ -38,6 +41,9 @@
       username: "",
       password: "",
       confirm: ""
+   }
+   if(loginStore.authUser){
+      router.push({name: 'customerList'})
    }
 
    function handleSubmit(event){
@@ -50,7 +56,7 @@
          alert("Las contraseñas no conciden")
          return 0
       }
-      loginStore.signUp(user)
+      loginStore.signUp(user) 
    }
 
 </script>
