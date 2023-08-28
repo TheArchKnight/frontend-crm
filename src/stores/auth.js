@@ -33,7 +33,8 @@ export const useAuthStore = defineStore("auth", {
       },
 
       async signUp(user){
-          const res = await fetch('http://localhost:8000/signup-api',{
+         try {
+          const res = await fetch('http://localhost:8000/signup-api/',{
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
@@ -41,18 +42,27 @@ export const useAuthStore = defineStore("auth", {
             body: JSON.stringify(user),
          })
          const data = await res.json()       
-
+         
+         if(data.username) {
+            throw new Error('Username exists')
+         }
          this.authUser = data.user.username
          this.email = data.user.email
          this.token = data.token
 
          router.push({name: 'customerList'})
+         }catch(error){
+            if(error.message === 'Username exists'){
+               alert('El usuario ya existe')
+               return -1
+            }      
+         }
       },
       logOut(){
          this.authUser = null
          this.token = null
          this.email = null
-         router.push('/')
+         router.push({name:'login'})
       }
    }
 })
