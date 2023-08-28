@@ -8,7 +8,7 @@
 
             <div class="navbar-nav">
                <img :src="logo" class="logo">
-               <router-link class="nav-link" to="/clientes" v-if="loginStore.authUser">Clientes</router-link>  
+               <router-link class="nav-link" :to="{name: 'customerList'}" v-if="loginStore.authUser">Clientes</router-link>  
             </div>
             <div class="navbar-nav ms-auto">
                <form class="d-flex" role="search" method="post" action="{{lista_url}}" v-if="loginStore.authUser">
@@ -21,6 +21,7 @@
                </form>
                <span class="navbar-text mx-3" v-if="loginStore.authUser">Perfil: {{loginStore.authUser}} </span> 
                <a class ="mx-3  nav-link" href="" @click="loginStore.logOut" v-if="loginStore.authUser">Cerrar sesion</a>
+               <router-link class="nav-link" :to="{name: 'signUp'}" v-if="!loginStore.authUser">Registrarse</router-link>
             </div>
          </div>
       </div>

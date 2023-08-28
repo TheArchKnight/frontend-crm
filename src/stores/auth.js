@@ -31,6 +31,23 @@ export const useAuthStore = defineStore("auth", {
 
          router.push({name: 'customerList'})
       },
+
+      async signUp(user){
+          const res = await fetch('http://localhost:8000/signup-api',{
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(user),
+         })
+         const data = await res.json()       
+
+         this.authUser = data.user.username
+         this.email = data.user.email
+         this.token = data.token
+
+         router.push({name: 'customerList'})
+      },
       logOut(){
          this.authUser = null
          this.token = null
